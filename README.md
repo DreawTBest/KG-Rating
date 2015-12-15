@@ -9,6 +9,6 @@ The application is currently in "freeze" mode - not developed. If there is any i
 
 # Bugs and issues
 
-If you find the bug or you have a some idea to make this application better, use please an "Issues" on top of page.
+If you find any bug or you have any idea to make this application better, please use the "Issues" tab on top of this page.
 
 Thanks
