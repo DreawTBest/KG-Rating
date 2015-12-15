@@ -1,0 +1,688 @@
+{header|include}
+
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-10">
+            <h2>Individual records for "{name}" <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#history_modal">RAW data</button></h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="/app">Home</a>
+                </li>
+
+                <li>
+                    <a href="/app/games">Games</a>
+                </li>
+
+                <li class="active">
+                    <strong>{name}</strong>
+                </li>
+            </ol>
+        </div>
+        <div class="col-lg-2">
+
+        </div>
+    </div>
+
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-lg-2">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-primary pull-right">All time</span>
+                        <h5>Gameplays</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">{actual_gameplays_count}</h1>
+                        {gameplays_count_daily_sign|if="+"replace="<div class='stat-percent font-bold text-success'>{gameplays_count_daily} <i class='fa fa-level-up'></i></div>"else="<div class='stat-percent font-bold text-danger'>{gameplays_count_daily} <i class='fa fa-level-down'></i></div>"}
+                        <small>Daily growth</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-primary pull-right">All time</span>
+                        <h5>Rating</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">{actual_rating_count}</h1>
+                        {gameplays_count_daily_sign|if="+"replace="<div class='stat-percent font-bold text-success'>{rating_count_daily} <i class='fa fa-level-up'></i></div>"else="<div class='stat-percent font-bold text-danger'>{rating_count_daily} <i class='fa fa-level-down'></i></div>"}
+                        <small>Daily growth</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-primary pull-right">All time</span>
+                        <h5>Number of ratings</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">{total_ratings_count}</h1>
+                        {gameplays_count_daily_sign|if="+"replace="<div class='stat-percent font-bold text-success'>{total_ratings_count_daily} <i class='fa fa-level-up'></i></div>"else="<div class='stat-percent font-bold text-danger'>{total_ratings_count_daily} <i class='fa fa-level-down'></i></div>"}
+                        <small>Daily growth</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-primary pull-right">All time</span>
+                        <h5>Favorites</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">{actual_favorites_count}</h1>
+                        {gameplays_count_daily_sign|if="+"replace="<div class='stat-percent font-bold text-success'>{favorites_count_daily} <i class='fa fa-level-up'></i></div>"else="<div class='stat-percent font-bold text-danger'>{favorites_count_daily} <i class='fa fa-level-down'></i></div>"}
+                        <small>Daily growth</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-danger pull-right">Actual</span>
+                        <h5>Actual game stats</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h1 class="no-margins" id="live_gameplays">
+                                    <div class="sk-spinner sk-spinner-three-bounce">
+                                        <div class="sk-bounce1"></div>
+                                        <div class="sk-bounce2"></div>
+                                        <div class="sk-bounce3"></div>
+                                    </div>
+                                </h1>
+                                <div class="font-bold text-navy"><small>Gameplays</small></div>
+                            </div>
+                            <div class="col-md-6">
+                                <h1 class="no-margins" id="live_rating">
+                                    <div class="sk-spinner sk-spinner-three-bounce">
+                                        <div class="sk-bounce1"></div>
+                                        <div class="sk-bounce2"></div>
+                                        <div class="sk-bounce3"></div>
+                                    </div>
+                                </h1>
+                                <div class="font-bold text-navy"><small>Rating</small></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Custom range stats</h5>
+            </div>
+
+             <div class="ibox-content">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="form-group" id="data_5">
+                            <form action="" method="post">
+                                <label class="font-noraml">Range select</label>
+                                <div class="input-daterange input-group date">
+                                    <input type="text" class="input-sm form-control datepicker" id="start" name="start" value="{date_add}"/>
+                                    <span class="input-group-addon">to</span>
+                                    <input type="text" class="input-sm form-control datepicker" id="end" name="end" value="{date_actual}" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Gameplays
+                            </div>
+                            <div class="panel-body">
+                                <div class="flot-chart">
+                                    <div class="flot-chart-content" id="graph_gameplays">
+                                        <div class="sk-spinner sk-spinner-three-bounce">
+                                            <div class="sk-bounce1"></div>
+                                            <div class="sk-bounce2"></div>
+                                            <div class="sk-bounce3"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Daily gameplays
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="flot-chart">
+                                    <div class="flot-chart-content" id="graph_daily_gameplays">
+                                        <div class="sk-spinner sk-spinner-three-bounce">
+                                            <div class="sk-bounce1"></div>
+                                            <div class="sk-bounce2"></div>
+                                            <div class="sk-bounce3"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Rating
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="flot-chart">
+                                    <div class="flot-chart-content" id="graph_rating">
+                                        <div class="sk-spinner sk-spinner-three-bounce">
+                                            <div class="sk-bounce1"></div>
+                                            <div class="sk-bounce2"></div>
+                                            <div class="sk-bounce3"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal inmodal" id="history_modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content animated bounceInRight">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                        <i class="fa fa-laptop modal-icon"></i>
+                        <h4 class="modal-title">RAW Game data</h4>
+                    </div>
+                    <div class="modal-body" style="background: #fff !important">
+                        <table class="table table-striped table-hover table-bordered" id="history">
+                            <thead>
+                                <th>GamePlays Count</th>
+                                <th>Rating</th>
+                                <th>Total ratings</th>
+                                <th>Favorites</th>
+                                <th>Snap date</th>
+                            </thead>
+
+                            <tbody>
+
+                                {history|foreach}
+
+                                    <tr>
+                                        <td>{gameplays_count}</td>
+                                        <td>{rating_count}</td>
+                                        <td>{total_ratings_count}</td>
+                                        <td>{favorites_count}</td>
+                                        <td>{snap_date}</td>
+                                    </tr>
+
+                                {history|/foreach}
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="wrapper wrapper-content">
+        <div class="modal inmodal" id="changelog_modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content animated bounceInRight">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                        <i class="fa fa-laptop modal-icon"></i>
+                        <h4 class="modal-title">Changelog</h4>
+                        <small class="font-bold">What has been changed in our app?</small>
+                    </div>
+                    <div class="modal-body" style="background: #fff !important">
+                        <p id="changelog_text">
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Tables -->
+    <script src="{url_data}/js/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="{url_data}/js/plugins/dataTables/dataTables.bootstrap.js"></script>
+    <script src="{url_data}/js/plugins/dataTables/dataTables.responsive.js"></script>
+    <script src="{url_data}/js/plugins/dataTables/dataTables.tableTools.min.js"></script>
+
+    <script src="{url}/common/libs/bbcode/xbbcode.js"></script>
+
+    <!-- Date Picker -->
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+    <script>
+        $(document).ready(function() {
+
+            $('.datepicker').datepicker({
+                dateFormat: 'dd/mm/yy',
+                startDate: '30/03/2015',
+                endDate: '15/04/2015'
+            });
+
+            setTimeout(data_load, 3000);
+
+            /* HISTORY DATATABLES */
+
+                $('#history').DataTable({
+                    responsive: true,
+                    "order": []
+                });
+
+            /* /HISTORY DATATABLES */
+
+            /* GRAPH DATA - FROM / TO */
+
+                $('#start, #end').change(function() {
+                    var start = $('#start').val().split('/');
+                    var end = $('#end').val().split('/');
+
+                    var start = new Date(start[2], start[1] - 1, start[0]);
+                    var end = new Date(end[2], end[1] - 1, end[0]);
+
+                    start_php = Date.parse(start) / 1000;
+                    end_php = Date.parse(end) / 1000;
+
+                    if (start >= end) {
+                        var correction = new Date();
+                        correction.setTime(end.getTime() - 1);
+                        correction = correction.getDate() + '/' + ("0" + (correction.getMonth() + 1)).slice(-2) + '/' + correction.getFullYear();
+                        start_php = parseInt(end_php - (24 * 60 * 60));
+
+                        $("#start").val(correction);
+                        alert('Date range is incorrect, start set to ' + correction);
+                    }
+
+                    $.ajax({
+                        url: '',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            'action': 'range_update',
+                            'from_date': start_php,
+                            'to_date': end_php
+                        }
+                    }).always(function(data) {
+
+                        /* GAMEPLAYS */
+
+                            var barOptions = {
+                                series: {
+                                    lines: {
+                                        show: true,
+                                        lineWidth: 0.6,
+                                        fill: true,
+                                        fillColor: {
+                                            colors: [{
+                                                opacity: 0.8
+                                            }, {
+                                                opacity: 0.8
+                                            }]
+                                        }
+                                    }
+                                },
+                                xaxis: {
+                                    mode: "time",
+                                    timeformat: "%d/%m/%y"
+                                },
+                                colors: ["#1ab394"],
+                                grid: {
+                                    color: "#999999",
+                                    hoverable: true,
+                                    clickable: true,
+                                    tickColor: "#D4D4D4",
+                                    borderWidth:0
+                                },
+                                legend: {
+                                    show: false
+                                },
+                                tooltip: true,
+                                tooltipOpts: {
+                                    content: "Date: %x, Gameplays: %y"
+                                }
+                            };
+
+                            $.plot($("#graph_gameplays"), [data[0][0]], barOptions);
+
+                        /* /GAMEPLAYS */
+
+                        /* DAILY */
+
+                            var barOptions = {
+                                series: {
+                                    lines: {
+                                        show: true,
+                                        lineWidth: 0.6,
+                                        fill: true,
+                                        fillColor: {
+                                            colors: [{
+                                                opacity: 0.8
+                                            }, {
+                                                opacity: 0.8
+                                            }]
+                                        }
+                                    }
+                                },
+                                xaxis: {
+                                    mode: "time",
+                                    timeformat: "%d/%m/%y"
+                                },
+                                colors: ["#1ab394"],
+                                grid: {
+                                    color: "#999999",
+                                    hoverable: true,
+                                    clickable: true,
+                                    tickColor: "#D4D4D4",
+                                    borderWidth:0
+                                },
+                                legend: {
+                                    show: false
+                                },
+                                tooltip: true,
+                                tooltipOpts: {
+                                    content: "Date: %x, GamePlays: %y"
+                                }
+                            };
+
+                            $.plot($("#graph_daily_gameplays"), [data[1][0]], barOptions);
+
+                        /* /DAILY */
+
+                        /* RATING */
+
+                            var barOptions = {
+                                series: {
+                                    lines: {
+                                        show: true,
+                                        lineWidth: 0.6,
+                                        fill: true,
+                                        fillColor: {
+                                            colors: [{
+                                                opacity: 0.8
+                                            }, {
+                                                opacity: 0.8
+                                            }]
+                                        }
+                                    }
+                                },
+                                xaxis: {
+                                    mode: "time",
+                                    timeformat: "%d/%m/%y"
+                                },
+                                yaxis: {
+                                    min: minFromArray(data[2][0]), max: maxFromArray(data[2][0]), tickDecimals: 5
+                                },
+                                colors: ["#1ab394"],
+                                grid: {
+                                    color: "#999999",
+                                    hoverable: true,
+                                    clickable: true,
+                                    tickColor: "#D4D4D4",
+                                    borderWidth:0
+                                },
+                                legend: {
+                                    show: false
+                                },
+                                tooltip: true,
+                                tooltipOpts: {
+                                    content: "Date: %x, Rating: %y"
+                                }
+                            };
+
+                            $.plot($("#graph_rating"), [data[2][0]], barOptions);
+
+                        /* /RATING */
+                    });
+                });
+
+            /* /GRAPH DATA - FROM / TO */
+        });
+
+        function data_load() {
+
+            /* GAMEPLAYS GRAPH */
+
+                $.ajax({
+                    url: '',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        'graph_data': 'gameplays'
+                    },
+                }).always(function(data) {
+                    var barOptions = {
+                        series: {
+                            lines: {
+                                show: true,
+                                lineWidth: 0.6,
+                                fill: true,
+                                fillColor: {
+                                    colors: [{
+                                        opacity: 0.8
+                                    }, {
+                                        opacity: 0.8
+                                    }]
+                                }
+                            }
+                        },
+                        xaxis: {
+                            mode: "time",
+                            timeformat: "%d/%m/%y"
+                        },
+                        colors: ["#1ab394"],
+                        grid: {
+                            color: "#999999",
+                            hoverable: true,
+                            clickable: true,
+                            tickColor: "#D4D4D4",
+                            borderWidth:0
+                        },
+                        legend: {
+                            show: false
+                        },
+                        tooltip: true,
+                        tooltipOpts: {
+                            content: "Date: %x, Gameplays: %y"
+                        }
+                    };
+
+                    $.plot($("#graph_gameplays"), [data], barOptions);
+                });
+
+            /* /GAMEPLAYS GRAPH */
+
+            /* DAILY GROWTH GRAPH */
+
+                $.ajax({
+                    url: '',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        'graph_data': 'daily'
+                    }
+                }).always(function(data) {
+                    var barOptions = {
+                        series: {
+                            lines: {
+                                show: true,
+                                lineWidth: 0.6,
+                                fill: true,
+                                fillColor: {
+                                    colors: [{
+                                        opacity: 0.8
+                                    }, {
+                                        opacity: 0.8
+                                    }]
+                                }
+                            }
+                        },
+                        xaxis: {
+                            mode: "time",
+                            timeformat: "%d/%m/%y"
+                        },
+                        colors: ["#1ab394"],
+                        grid: {
+                            color: "#999999",
+                            hoverable: true,
+                            clickable: true,
+                            tickColor: "#D4D4D4",
+                            borderWidth:0
+                        },
+                        legend: {
+                            show: false
+                        },
+                        tooltip: true,
+                        tooltipOpts: {
+                            content: "Date: %x, GamePlays: %y"
+                        }
+                    };
+
+                    $.plot($("#graph_daily_gameplays"), [data], barOptions);
+                });
+
+
+            /* /DAILY GROWTH GRAPH */
+
+            /* RATING GRAPH */
+
+                $.ajax({
+                    url: '',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        'graph_data': 'rating'
+                    },
+                }).always(function(data) {
+                    var barOptions = {
+                        series: {
+                            lines: {
+                                show: true,
+                                lineWidth: 0.6,
+                                fill: true,
+                                fillColor: {
+                                    colors: [{
+                                        opacity: 0.8
+                                    }, {
+                                        opacity: 0.8
+                                    }]
+                                }
+                            }
+                        },
+                        xaxis: {
+                            mode: "time",
+                            timeformat: "%d/%m/%y"
+                        },
+                        yaxis: {
+                            min: minFromArray(data), max: maxFromArray(data), tickDecimals: 5
+                        },
+                        colors: ["#1ab394"],
+                        grid: {
+                            color: "#999999",
+                            hoverable: true,
+                            clickable: true,
+                            tickColor: "#D4D4D4",
+                            borderWidth:0
+                        },
+                        legend: {
+                            show: false
+                        },
+                        tooltip: true,
+                        tooltipOpts: {
+                            content: "Date: %x, Rating: %y"
+                        }
+                    };
+
+                    $.plot($("#graph_rating"), [data], barOptions);
+                });
+
+            /* /RATING GRAPH */
+
+            /* GET ACTUAL GAME RANKING */
+
+                $.ajax({
+                    url: '',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        'get_actual_data': '{name}'
+                    }
+                }).always(function(data) {
+                    $('#live_gameplays').text(data['gameplays_count']);
+                    $('#live_rating').text(data['rating']);
+                });
+
+            /* /GET ACTUAL GAME RANKING */
+
+            /* AJAX -> changelog */
+                $.ajax({
+                    url: '',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        'action': 'changelog'
+                    }
+                }).always(function(data) {
+                    if (data['view'] == 'true') {
+                        $("#changelog_text").text(data['text']);
+                        $("#changelog_modal").modal();
+
+                         for (var i = $('#changelog_text').length - 1; i >= 0; i--) {
+                            var result = XBBCODE.process({
+                                text: $('#changelog_text:eq(' + i + ')').text(),
+                                removeMisalignedTags: false,
+                                addInLineBreaks: true
+                            });
+
+                            $('#changelog_text:eq(' + i + ')').html(result.html);
+                        };
+                    }
+                });
+            /* /AJAX -> changelog */
+        }
+
+        function graphToSingleArray(flot_array) {
+            var arr = [];
+
+            for (var i = 0; i < flot_array.length; i++) {
+                arr.push(flot_array[i][1]);
+            };
+
+            return arr;
+        }
+
+        function maxFromArray(arr) {
+            arr = graphToSingleArray(arr);
+            return Math.max.apply(null, arr);
+        }
+
+        function minFromArray(arr) {
+            arr = graphToSingleArray(arr);
+            return Math.min.apply(null, arr);
+        }
+
+    </script>
+
+{footer|include}

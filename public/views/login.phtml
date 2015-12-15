@@ -1,0 +1,35 @@
+{header|include}
+
+	<div class="middle-box text-center loginscreen animated fadeInDown">
+    {getMessage}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="ibox-content">
+                    <form class="m-t" role="form" action="" method="POST">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="uid" placeholder="Username" required="">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" name="pass" placeholder="Password" required="">
+                            <input type="hidden" name="dreaw_token" value="{getToken}" />
+                        </div>
+                        <button type="submit" class="btn btn-primary block full-width m-b" name="login_submit">Login</button>
+
+                        <!--<a href="#">
+                            <small>Forgot password? No way to restore it!</small>
+                        </a>-->
+
+                        <p class="text-muted text-center">
+                            <small>Do not have an account?</small>
+                        </p>
+                        <a class="btn btn-sm btn-white btn-block" href="/register">Create an account</a>
+                    </form>
+                    <p class="m-t">
+                        <small>KG-Rating.com</small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{footer|include}

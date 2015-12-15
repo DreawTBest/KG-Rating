@@ -1,0 +1,35 @@
+<table class="table table-striped table-hover table-bordered dataTables_wrapper form-inline" id="all_games_datatables">
+	<thead>
+		<th>Name</th>
+		<th>Gameplays</th>
+		<th>Rating</th>
+		<th>Number of ratings</th>
+		<th>Favorites</th>
+	</thead>
+
+	<tbody>
+
+		{if="games"|isEmpty}
+
+			<tr>
+				<td colspan="5">This developer doesn't have any games in database.</td>
+			</tr>
+
+		{else}
+
+			{games|foreach}
+
+				<tr>
+					<td><a href="games/{code_represent}">{name}</a></td>
+					<td>{actual_gameplays_count}</td>
+					<td>{actual_rating_count}</td>
+					<td>{total_ratings_count}</td>
+					<td>{actual_favorites_count}</td>
+				</tr>
+
+			{games|/foreach}
+
+		{endif}
+
+	</tbody>
+</table>

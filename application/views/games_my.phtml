@@ -1,0 +1,142 @@
+{header|include}
+
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-10">
+            <h2>My games in database <a href="./gameAdd" class="btn btn-primary">Add game</a></h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="/app">Home</a>
+                </li>
+
+                <li>
+                    <strong>My Games</strong>
+                </li>
+            </ol>
+        </div>
+        <div class="col-lg-2">
+
+        </div>
+    </div>
+
+    <br  />
+    {getMessage}
+
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-marigns">
+                    <div class="ibox-title">
+                        <h5>My games in database</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <table class="table table-striped table-hover table-bordered dataTables_wrapper form-inline" id="all_games_datatables">
+                            <thead>
+                                <th>Name</th>
+                                <th>Gameplays</th>
+                                <th>Rating</th>
+                                <th>Number of ratings</th>
+                                <th>Favorites</th>
+                            </thead>
+
+                            <tbody>
+
+                                {if="games"|isEmpty}
+
+                                    <tr>
+                                        <td colspan="5">You haven't added any games</td>
+                                    </tr>
+
+                                {else}
+
+                                    {games|foreach}
+
+                                        <tr>
+                                            <td><a href="games/{code_respresent}">{name}</a></td>
+                                            <td>{actual_gameplays_count}</td>
+                                            <td>{actual_rating_count}</td>
+                                            <td>{total_ratings_count}</td>
+                                            <td>{actual_favorites_count}</td>
+                                        </tr>
+
+                                    {games|/foreach}
+
+                                {endif}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="wrapper wrapper-content">
+        <div class="modal inmodal" id="changelog_modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content animated bounceInRight">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                        <i class="fa fa-laptop modal-icon"></i>
+                        <h4 class="modal-title">Changelog</h4>
+                        <small class="font-bold">What has been changed in our app?</small>
+                    </div>
+                    <div class="modal-body" style="background: #fff !important">
+                        <p id="changelog_text">
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Tables -->
+    <script src="{url_data}/js/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="{url_data}/js/plugins/dataTables/dataTables.bootstrap.js"></script>
+    <script src="{url_data}/js/plugins/dataTables/dataTables.responsive.js"></script>
+    <script src="{url_data}/js/plugins/dataTables/dataTables.tableTools.min.js"></script>
+
+    <script src="{url}/common/libs/bbcode/xbbcode.js"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            /*$.fn.dataTableExt.sErrMode = 'mute';
+
+            $('#all_games_datatables').DataTable({
+                responsive: true,
+                "order": []
+            });*/
+
+            /* AJAX -> changelog */
+                $.ajax({
+                    url: '',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        'action': 'changelog'
+                    }
+                }).always(function(data) {
+                    if (data['view'] == 'true') {
+                        $("#changelog_text").text(data['text']);
+                        $("#changelog_modal").modal();
+
+                        for (var i = $('#changelog_text').length - 1; i >= 0; i--) {
+                            var result = XBBCODE.process({
+                                text: $('#changelog_text:eq(' + i + ')').text(),
+                                removeMisalignedTags: false,
+                                addInLineBreaks: true
+                            });
+
+                            $('#changelog_text:eq(' + i + ')').html(result.html);
+                        };
+                    }
+                });
+            /* /AJAX -> changelog */
+        });
+
+    </script>
+
+{footer|include}

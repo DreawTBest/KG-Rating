@@ -1,0 +1,174 @@
+{header|include}
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-10">
+            <h2>Homepage</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <strong>Home</strong>
+                </li>
+            </ol>
+        </div>
+        <div class="col-lg-2">
+
+        </div>
+    </div>
+
+    <br  />{getMessage}
+
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="ibox float-e-marigns">
+                    <div class="ibox-title">
+                        <h5>Last added games</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <table class="table table-striped table-hover table-bordered dataTables_wrapper form-inline" id="all_games_datatables">
+                            <thead>
+                                <tr>
+                                    <th>Game</th>
+                                    <th>Developer</th>
+                                    <th>Add</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                {last_games|foreach}
+
+                                    <tr>
+                                        <td><a href="games/{name}"></a>{name}</td>
+                                        <td>{developer}</td>
+                                        <td>{date_add}</td>
+                                    </tr>
+
+                                {last_games|/foreach}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="ibox float-e-marigns">
+                    <div class="ibox-title">
+                        <h5>Last added developers</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <table class="table table-striped table-hover table-bordered dataTables_wrapper form-inline" id="all_games_datatables">
+                            <thead>
+                                <tr>
+                                    <th>Developer</th>
+                                    <th>Last logged</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                {last_developers|foreach}
+
+                                    <tr>
+                                        <td>{uid}</td>
+                                        <td>{last_logged}</td>
+                                        <td>-</td>
+                                    </tr>
+
+                                {last_developers|/foreach}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="ibox float-e-marigns">
+                    <div class="ibox-title">
+                        <h5>Issues</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <table class="table table-hover issue-tracker table-striped table-bordered dataTables_wrapper" id="issues_datatables">
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Text</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                {issues|foreach}
+
+                                    <tr>
+                                        <td>
+                                            <span class="label label-{category_color}">{category}</span>
+                                        </td>
+                                        <td class="issue-info">
+                                            <small>{text}</small>
+                                        </td>
+                                        <td class="right">
+                                            <small>{status}</small>
+                                        </td>
+                                        <td class="right">
+                                            {date}
+                                        </td>
+                                        <td align="center">
+                                            <a href="?action=processed&id={id}" class="btn btn-primary"><span class="fa fa-check"></span>&nbsp;Processed</a>
+                                        </td>
+                                    </tr>
+
+                                {issues|/foreach}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Tables -->
+    <script src="{url_data}/js/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="{url_data}/js/plugins/dataTables/dataTables.bootstrap.js"></script>
+    <script src="{url_data}/js/plugins/dataTables/dataTables.responsive.js"></script>
+    <script src="{url_data}/js/plugins/dataTables/dataTables.tableTools.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#all_games_datatables').DataTable({
+                responsive: true,
+                "order": []
+            });
+            $("#issues_datatables").DataTable({
+                responsive: true,
+                "order" : []
+            });
+
+            $("#viewed").click(function() {
+                alert($("#viewed").val());
+            });
+        });
+    </script>
+
+{footer|include}

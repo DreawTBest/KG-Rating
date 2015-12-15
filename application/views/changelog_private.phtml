@@ -1,0 +1,120 @@
+{header|include}
+
+	<div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-10">
+            <h2>ChangeLog</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="/app">Home</a>
+                </li>
+
+                <li>
+                    <strong>ChangeLog</strong>
+                </li>
+            </ol>
+        </div>
+        <div class="col-lg-2">
+
+        </div>
+    </div>
+
+    <br  />
+
+    {getMessage}
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>Add ChangeLog</h5>
+                    </div>
+
+                    <div class="ibox-content">
+                        <form method="POST" action="">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Message</label>
+                                        <textarea class="form-control" placeholder="Write message..." name="changelog_msg" id="#changelog_msg"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <button class="btn btn-primary pull-right" type="submit" name="changelog_add_submit">Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>ChangeLog</h5>
+                    </div>
+
+                    <div class="ibox-content">
+                        <div class="row">
+
+                            {logs|foreach}
+
+                                <div class="col-lg-4">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            {date}
+                                        </div>
+                                        <div class="panel-body bbc">
+                                            {text}
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            {logs|/foreach}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CKEDITOR -->
+    <script src="{url}/common/libs/ckeditor/ckeditor.js"></script>
+
+    <!-- BBCODE -->
+    <script src="{url}/common/libs/bbcode/xbbcode.js"></script>
+
+    <!-- Data Tables -->
+    <script src="{url}/common/libs/template/js/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="{url}/common/libs/template/js/plugins/dataTables/dataTables.bootstrap.js"></script>
+    <script src="{url}/common/libs/template/js/plugins/dataTables/dataTables.responsive.js"></script>
+    <script src="{url}/common/libs/template/js/plugins/dataTables/dataTables.tableTools.min.js"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            $('#data_tables').DataTable();
+            CKEDITOR.replace('changelog_msg');
+
+            for (var i = $('.bbc').length - 1; i >= 0; i--) {
+                var result = XBBCODE.process({
+                    text: $('.bbc:eq(' + i + ')').text(),
+                    removeMisalignedTags: false,
+                    addInLineBreaks: true
+                });
+
+                $('.bbc:eq(' + i + ')').html(result.html);
+            };
+        });
+
+    </script>
+
+
+{footer|include}

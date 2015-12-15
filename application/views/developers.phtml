@@ -1,0 +1,127 @@
+{header|include}
+
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-10">
+            <h2>Developers</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="/app">Home</a>
+                </li>
+
+                <li>
+                    <strong>Developers</strong>
+                </li>
+            </ol>
+        </div>
+        <div class="col-lg-2">
+
+        </div>
+    </div>
+
+    <br  />
+    {getMessage}
+
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-lg-12">
+
+                {developers|foreach}
+
+                    <div class="col-lg-3">
+                        <div class="contact-box center-version">
+
+                            <a href="#" data-toggle="modal" data-target="#developer_modal" data-uid="{uid}">
+
+                                <img alt="image" class="img-circle" src="/app/secure-img/profile_image/{id}">
+
+
+                                <h3 class="m-b-xs"><strong>{uid}</strong></h3>
+
+                                <p>Joined: <span class="font-bold">{created}</span></p>
+                                <p>{description}</p>
+                                <!--<address class="m-t-md">
+                                    <strong>Twitter, Inc.</strong><br>
+                                    795 Folsom Ave, Suite 600<br>
+                                    San Francisco, CA 94107<br>
+                                    <abbr title="Phone">P:</abbr> (123) 456-7890
+                                </address>-->
+
+                            </a>
+                            <!--<div class="contact-box-footer">
+                                <div class="m-t-xs btn-group">
+                                    <a class="btn btn-xs btn-white"><i class="fa fa-phone"></i> Call </a>
+                                    <a class="btn btn-xs btn-white"><i class="fa fa-envelope"></i> Email</a>
+                                    <a class="btn btn-xs btn-white"><i class="fa fa-user-plus"></i> Follow</a>
+                                </div>
+                            </div>-->
+
+                        </div>
+                    </div>
+
+                {developers|/foreach}
+
+            </div>
+        </div>
+    </div>
+
+    <div class="wrapper wrapper-content">
+        <div class="modal inmodal" id="developer_modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content animated bounceInRight">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                        <i class="fa fa-laptop modal-icon"></i>
+                        <h4 class="modal-title">Games</h4>
+                        <!--<small class="font-bold">What was changed in our app?</small>-->
+                    </div>
+                    <div class="modal-body" id="developer_content" style="background:#fff !important">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Tables -->
+    <script src="{url_data}/js/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="{url_data}/js/plugins/dataTables/dataTables.bootstrap.js"></script>
+    <script src="{url_data}/js/plugins/dataTables/dataTables.responsive.js"></script>
+    <script src="{url_data}/js/plugins/dataTables/dataTables.tableTools.min.js"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            $.fn.dataTableExt.sErrMode = 'mute';
+
+            $('#all_games_datatables').DataTable({
+                responsive: true,
+                "order": []
+            });
+
+            /* DEVELOPER MODAL */
+
+                $(document).on('click', 'a[data-target="#developer_modal"]', function () {
+                    $('#developer_content').html('<div class="sk-spinner sk-spinner-three-bounce"><div class="sk-bounce1"></div><div class="sk-bounce2"></div><div class="sk-bounce3"></div></div>');
+
+                    $.ajax({
+                        url: '',
+                        type: 'POST',
+                        dataType: 'html',
+                        data: {
+                            'action': 'developer_detail',
+                            'uid': $(this).attr('data-uid')
+                        }
+                    }).always(function(data) {
+                        $('#developer_content').html(data);
+                    });
+                });
+
+            /* /DEVELOPER MODAL */
+        });
+
+    </script>
+
+{footer|include}
